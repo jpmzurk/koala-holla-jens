@@ -14,6 +14,7 @@ function setupClickListeners() {
   $('#viewKoalas').on('click', '.readyTransferBtn', putKoala);
 }
 
+
 function getKoalas(){
   console.log( 'in getKoalas' );
   // ajax call to server to get koalas
@@ -46,4 +47,24 @@ function saveKoala( newKoala ){
   console.log( 'in saveKoala', newKoala );
   // ajax call to server to get koalas
  
+}
+function putKoala() {
+  let clickedId = $(this).closest('tr').data('bear').id;
+  let bear = $(this).closest('tr').data('bear')
+
+  console.log(clickedId, bear);
+  
+  $.ajax({
+    method: 'PUT',
+    url: `/koalas/${clickedId}`,
+    data: bear
+    
+  }).then (function (response) {
+    console.log('in putKoala', response);
+    getKoalas();
+
+  }).catch(function(error){
+    console.log('this is the error', error);
+  })
+  
 }
