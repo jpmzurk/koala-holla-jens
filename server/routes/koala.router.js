@@ -23,7 +23,7 @@ koalaRouter.post('/', (req, res) => {
     console.log('adding bear', newBear);
     let queryText = ` INSERT INTO "bears" ("name", "gender", "age", "ready_to_transfer","notes")
      VALUES ($1, $2, $3, $4, $5);`
-    pool.query(queryText, [newBear.name, newBear.gender, newBear.age, newBear.readyForTransfer, newBear.notes])
+    pool.query(queryText, [newBear.name, newBear.gender, newBear.age, newBear.ready_to_transfer, newBear.notes])
         .then((results) => {
             res.sendStatus(201);
         }).catch((error) => {
