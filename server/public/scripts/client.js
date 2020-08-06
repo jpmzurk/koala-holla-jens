@@ -29,10 +29,22 @@ function saveKoala( newKoala ){
  
 }
 function putKoala() {
-  let currentTdRow = $(this).closest('td').siblings();
+  let clickedId = $(this).closest('tr').data('bear').id;
+  let bear = $(this).closest('tr').data('bear')
 
-  // 'Yes' 'No'
+  console.log(clickedId, bear);
+  
+  $.ajax({
+    method: 'PUT',
+    url: `/koalas/${clickedId}`,
+    data: bear
+    
+  }).then (function (response) {
+    console.log('in putKoala', response);
+    getKoalas();
 
-  // '/koalas'
-
+  }).catch(function(error){
+    console.log('this is the error', error);
+  })
+  
 }
