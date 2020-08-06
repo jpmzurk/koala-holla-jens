@@ -10,18 +10,38 @@ $( document ).ready( function(){
 }); // end doc ready
 
 function setupClickListeners() {
-  
-    // call saveKoala with the new object
-    // saveKoala( koalaToSend );
-
-} 
+  $( '#addButton' ).on( 'click', saveKoala);
+  $('#viewKoalas').on('click', '.readyTransferBtn', putKoala);
+}
 
 
 function getKoalas(){
   console.log( 'in getKoalas' );
   // ajax call to server to get koalas
-  
-} // end getKoalas
+  $.ajax({
+    method: 'GET',
+    url: '/koalas'
+  }).then(function(response) {
+    appendKoalas(response);
+  }).catch(function(error) {
+    console.log('error in GET:', error);
+  });
+};
+
+function appendKoalas(bears) {
+  $('#viewKoalas').empty();
+  for(let i = 0; i < bears.length; i++) {
+    let bear = bears[i];
+    $('#viewKoalas').append(`<tr data-id="${bear}">
+    <td>bear.name</td>
+    <td>bear.age</td>
+    <td>bear.gender</td>
+    <td>bear.ready_for_transfer<button class="readyTransferBtn">Ready/Not Ready for Transfer</button></td>
+    <td>bear.notes</td>
+    <td><button class="deleteBtn">Delete</button></td>
+  </tr>`)
+  };
+};
 
 function saveKoala( newKoala ){
   console.log( 'in saveKoala', newKoala );
