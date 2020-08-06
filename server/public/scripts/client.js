@@ -46,7 +46,25 @@ function appendKoalas(bears) {
 function saveKoala( newKoala ){
   console.log( 'in saveKoala', newKoala );
   // ajax call to server to get koalas
- 
+   let koalaToSend = {
+    name: $('#nameIn').val(),
+    age: $('#ageIn').val(),
+    gender: $('#genderIn').val(),
+    readyForTransfer: $('#readyForTransferIn').val(),
+    notes: $('#notesIn').val()
+  };
+  // ajax call to server to get koalas
+$.ajax({
+  method: 'POST',
+  url: '/koalas',
+  data: koalaToSend
+}).then(function(response) {
+  console.log('the Response from server', response)
+  getKoalas()
+}).catch(function (error) {
+  console.log('error in POST', error)
+  alert('unable to add koala to server, please tray again later')
+})
 }
 function putKoala() {
   let clickedId = $(this).closest('tr').data('bear').id;
