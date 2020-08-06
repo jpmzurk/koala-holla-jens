@@ -33,18 +33,18 @@ function appendKoalas(bears) {
   $('#viewKoalas').empty();
   for (let i = 0; i < bears.length; i++) {
     let bear = bears[i];
-    $('#viewKoalas').append(`<tr>
-    $(td).data(‘bear’, ${bear});
-    <td>${bear.name}</td>
-    <td>${bear.age}</td>
-    <td>${bear.gender}</td>
-    <td>${bear.ready_to_transfer}<button class="readyTransferBtn">Ready/Not Ready for Transfer</button></td>
-    <td>${bear.notes}</td>
-    <td><button class="deleteBtn">Delete</button></td>
-  </tr>`)
+    console.log(bear);
+    let $tr = $(`<tr></tr>`);
+    $tr.data('bear', bear);
+    $tr.append(`<td>${bear.name}</td>`);
+    $tr.append(`<td>${bear.age}</td>`);
+    $tr.append(`<td>${bear.gender}</td>`);
+    $tr.append(`<td>${bear.ready_to_transfer}<button class="readyTransferBtn">Ready/Not Ready for Transfer</button></td>`);
+    $tr.append(`<td>${bear.notes}</td>`);
+    $tr.append(`<td><button class="deleteBtn">Delete</button></td>`)
+    $('#viewKoalas').append($tr);
   };
-};
-
+}
 function saveKoala() {
   console.log('in saveKoala',);
   // ajax call to server to get koalas
@@ -72,8 +72,7 @@ function saveKoala() {
 
 function putKoala() {
   let clickedId = $(this).closest('tr').data('bear').id;
-  let bear = $(this).closest('tr').data('bear')
-  console.log(clickedId)
+  let bear = $(this).closest('tr').data('bear');
 
   console.log(clickedId, bear);
 
