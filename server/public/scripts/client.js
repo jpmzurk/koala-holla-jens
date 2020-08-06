@@ -10,22 +10,12 @@ $( document ).ready( function(){
 }); // end doc ready
 
 function setupClickListeners() {
-  $( '#addButton' ).on( 'click', function(){
-    console.log( 'in addButton on click' );
-    // get user input and put in an object
-    // NOT WORKING YET :(
-    // using a test object
-    let koalaToSend = {
-      name: 'testName',
-      age: 'testName',
-      gender: 'testName',
-      readyForTransfer: 'testName',
-      notes: 'testName',
-    };
-    // call saveKoala with the new obejct
-    saveKoala( koalaToSend );
-  }); 
-}
+  
+    // call saveKoala with the new object
+    // saveKoala( koalaToSend );
+
+} 
+
 
 function getKoalas(){
   console.log( 'in getKoalas' );
@@ -37,4 +27,12 @@ function saveKoala( newKoala ){
   console.log( 'in saveKoala', newKoala );
   // ajax call to server to get koalas
  
+}
+function putKoala() {
+  let currentTdRow = $(this).closest('td').siblings();
+
+  // 'Yes' 'No'
+
+  // '/koalas'
+
 }
