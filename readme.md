@@ -1,3 +1,54 @@
+# Project Name: Koala Holla 
+
+## Description
+
+_Duration: 1 day_
+
+This project was to created a website to display koala bear information for our client Koala Holla (1976 Llama Comma Drive, Walla Walla WA), a non-profit dedicated to the ethical transitioning of koalas from the outdoors to the indoors. The site allows the use to input new koala data as well as change the koalas transfer status. There is also a delete option if you need to remove a bear from the database
+
+
+## Usage
+- To get to the site and all its data:
+1. Go to Postico and create a new database with the infomation provided in the database.sql
+2. turn on the server   
+3. got to localhost:5000 
+
+- To add new bears: 
+1. fill out all input fields provided
+2. hit submit!
+
+- you can toggle bears ready for transfer status
+
+- You can delete bears from the database by hitting the delete button on one of the table rows.
+
+- There is also a edit button that allows you to edit a specific bears information in row
+
+## Built With
+
+- JavaScript
+- Bootstrap
+- JQuery
+- Html
+- CSS
+- Popper
+- Postgres
+- Postico
+
+## Acknowledgement
+Team members: 
+- Sam Maus - https://github.com/samueldmaus
+- Patrick Mazurek - https://github.com/jpmzurk
+- Karl Beck - https://github.com/karljohnbeck
+
+Thanks to [Prime Digital Academy](www.primeacademy.io) who equipped and helped me to make this application a reality. (Thank your people)
+
+## Support
+If you have suggestions or issues, please email any of us at [samueldmaus@gmail.com], [karljohnbeck@gmail.com], [jpmzurk@gmail.com]
+
+
+
+
+
 This must stop:
 ---------------
 ![Nevar again](https://i.makeagif.com/media/8-22-2014/GO_DT4.gif)

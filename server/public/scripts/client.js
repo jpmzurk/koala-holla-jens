@@ -12,31 +12,72 @@ function setupClickListeners() {
   $('#addButton').on('click', saveKoala);
   $('#viewKoalas').on('click', '.readyTransferBtn', putKoala);
   $('#viewKoalas').on('click', '.deleteBtn', deleteBear);
-                                                 //ADDED CLICK LISTENERS
   $('#viewKoalas').on('click', '.edit', editABear);
-  $('#viewKoalas').on('click', '.reSubmit', reSubmitBear);  
+  $('#viewKoalas').on('click', '.cancel', editABear);
 }
 
 
-function reSubmitBear (){
-  console.log('in reSubmitBear');
+function submitEditedBear (bear){
+
+  $.ajax({
+    method: 'PUT',
+    url: `/koalas/reSubmit`,
+    data: bear
+
+  }).then(function (response) {
+    console.log('in resubmitBear', response);
+    getKoalas();
+
+  }).catch(function (error) {
+    console.log('this is the error', error);
+  })
 }
+
 
 function editABear() {
-  let $currentRow = $(this).closest('tr')
-  console.log($(this).closest('tr'));
+  let $currentRow = $(this).closest('tr');
+  let $thisTd = $(this).closest('tr').children('td');
+  let disableEditable = ($currentRow).prop('contenteditable', false);
+  let enableEditable = ($currentRow).prop('contenteditable', true);
+  let cancelButton = '<td> <button class="cancel btn btn-outline-secondary"> Cancel </button> </td>';
+  let cancelButtonLocation = ($currentRow).children('td').eq(7);
   
+  let stringOfTd = $thisTd.eq(3).text();;
+  let readyToTransfer = stringOfTd.replace(/ .*/,'');
+
+  if (readyToTransfer == 'NoReady/Not' ){
+    readyToTransfer === 'No';
+  } else if(readyToTransfer == 'YesReady/Not'){
+    readyToTransfer === 'Yes';
+  }
+  
+
   if ($(this).text() == 'Done' ){
-      console.log('edit prop is true');
-      $(this).html('Edit')
-      $($currentRow).prop('contenteditable', false);
-      $($currentRow).children('td').eq(7).remove();
+      $(disableEditable);
+      //change name of button
+      $(this).html('Edit');
+      //pull in edited text
+      let bear = {};
+      bear.id = $(this).closest('tr').data('bear').id;
+      bear.name = $thisTd.eq(0).text();
+      bear.age = Number($thisTd.eq(1).text());
+      bear.gender = $thisTd.eq(2).text();
+      bear.ready_to_transfer = readyToTransfer;
+      bear.notes = $thisTd.eq(4).text();
+
+      //update data-bear object
+      $currentRow.data('bear', bear);
+      //remove cancel button
+      $(cancelButtonLocation).remove();
+      //running resubmit function
+      submitEditedBear(bear);
      
   } else if ($(this).text() == 'Edit' ) {
-      console.log('edit prop is false');
-      $($currentRow).prop('contenteditable', true)
+      $(enableEditable);
+      //change name of button
       $(this).html('Done')
-      $currentRow.append('<td> <button class="reSubmit btn btn-outline-secondary"> ReSubmit </button> </td>')
+      //add Cancel Button
+      $currentRow.append(cancelButton)
   }
 }
 
@@ -47,6 +88,8 @@ function getKoalas() {
     method: 'GET',
     url: '/koalas'
   }).then(function (response) {
+    console.log('current list of bears ', response);
+    
     appendKoalas(response);
   }).catch(function (error) {
     console.log('error in GET:', error);
@@ -58,21 +101,20 @@ function appendKoalas(bears) {
   $('#viewKoalas').empty();
   for (let i = 0; i < bears.length; i++) {
     let bear = bears[i];
-    let $tr = $(`<tr prop></tr>`);
+    let $tr = $(`<tr></tr>`);
     $tr.data('bear', bear);
-    $tr.append(`<td>${bear.name}</td>`);
-    $tr.append(`<td>${bear.age}</td>`);
-    $tr.append(`<td>${bear.gender}</td>`);
-    $tr.append(`<td>${bear.ready_to_transfer}<button class="readyTransferBtn btn btn-outline-secondary">Ready/Not Ready for Transfer</button></td>`);
-    $tr.append(`<td>${bear.notes}</td>`);
+    $tr.append(`<td class="bearStuff">${bear.name}</td>`);
+    $tr.append(`<td class="bearStuff">${bear.age}</td>`);
+    $tr.append(`<td class="bearStuff">${bear.gender}</td>`);
+    $tr.append(`<td class="bearStuff" >${bear.ready_to_transfer}<button class="readyTransferBtn btn btn-outline-secondary">Ready/Not Ready for Transfer</button></td>`);
+    $tr.append(`<td class="bearStuff">${bear.notes}</td>`);
     $tr.append(`<td><button class="deleteBtn btn btn-outline-secondary">Delete</button></td>`);
     $tr.append(`<td><button class="edit btn btn-outline-secondary">Edit</button></td>`);                                    //ADDED EDIT                     
     $('#viewKoalas').append($tr);
   };
 }
 function saveKoala() {
-  
-  console.log('in saveKoala',);
+  console.log('in saveKoala');
   // ajax call to server to get koalas
   let koalaToSend = {
     name: $('#nameIn').val(),
@@ -90,7 +132,6 @@ function saveKoala() {
     console.log('the Response from server', response)
     getKoalas()
 
-                                                                                    //clear fields
     $('#nameIn').val(''); 
     $('#ageIn').val('');
     $('#genderIn').val('');
@@ -103,16 +144,13 @@ function saveKoala() {
   })
 }
 
-
 function putKoala() {
-  let clickedId = $(this).closest('tr').data('bear').id;
   let bear = $(this).closest('tr').data('bear');
-
-  console.log(clickedId, bear);
+  console.log(bear);
 
   $.ajax({
     method: 'PUT',
-    url: `/koalas/${clickedId}`,
+    url: `/koalas/`,
     data: bear
 
   }).then(function (response) {
@@ -139,5 +177,4 @@ function deleteBear () {
   }).catch(function (error) {
     console.log('this is the error', error);
   })
-
 }
