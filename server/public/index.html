@@ -3,41 +3,57 @@
   <head>
     <meta charset="utf-8">
     <title>Koalla Holla</title>
-    <script src="vendors/jquery-3.3.1.min.js" charset="utf-8"></script>
+    <script src="vendors/jquery-3.3.1.min.js" charset="utf-8"></script> 
+     <script src="vendors/popper.js"></script>
+     <script src="vendors/bootstrap.min.js"></script>
     <script src="scripts/client.js" charset="utf-8"></script>
-    <link rel="stylesheet" href="views/styles.css">
+    <link rel="stylesheet" href="vendors/bootstrap.css">
+    <link rel="stylesheet" href="style/style.css">
   </head>
   <body>
     <header>
       <img src="images/icon.png" class="icon" />
-      <h1>Koala Holla</h1>
-      <h3>1976 Llama Comma Drive</h2>
-      <h3>Walla Walla, WA</h2>
+      <h4>Koala Holla</h4>
+      <h4>1976 Llama Comma Drive</h4>
+      <h4>Walla Walla, WA</h4>
     </header>
     <section id="addKoala">
       <h2>Add Koala</h2>
-      <input type="text" id="nameIn" value="" placeholder="Name">
-      <input type="text" id="ageIn" value="" placeholder="Age">
-      <input type="text" id="genderIn" value="" placeholder="Gender">
-      <input type="text" id="readyForTransferIn" value="" placeholder="Transfer">
-      <input type="text" id="notesIn" value="" placeholder="Notes">
-      <button type="button" id="addButton">Add Koala</button>
+      <form class="form-inline">
+      <input class="form-control"type="text" id="nameIn" placeholder="Name">
+      <input class="form-control"type="text" id="ageIn" placeholder="Age">
+      <input class="form-control"type="text" id="genderIn" placeholder="Gender">
+      
+      <button type="button" id="transferLabel" class="btn btn-outline-secondary" disabled >Ready for Transfer</button>
+      <div class="form-group">
+        <select class="form-control" id="readyForTransferIn">
+          <option>Yes</option>
+          <option>No</option>
+        </select>
+      </div>
+      <input class="form-control" type="text" id="notesIn" value="" placeholder="Notes">
+      <button class="btn btn-outline-secondary" type="button" id="addButton">Add Koala</button>
+      </form>
     </section>
     <section>
       <h2>All Koalas</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Age</th>
-            <th>Gender</th>
-            <th>Ready for Transfer</th>
-            <th>Notes</th>
-          </tr>
-        </thead>
-        <tbody id="viewKoalas">
-        </tbody>
-      </table>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Age</th>
+              <th>Gender</th>
+              <th>Ready for Transfer</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody id="viewKoalas">
+          </tbody>
+        </table>
+      </div>
     </section>
+     <!-- <input class="form-control" type="text" id="readyForTransferIn" placeholder="Transfer"> -->
+     
   </body>
 </html>
